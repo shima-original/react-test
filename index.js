@@ -1,10 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-// 2) You need to figure out which properties are
+const useRenderInspector = (newProps) => {
+  const [memoizedProps, setMemoizedProps] = useState(newProps);
+
+  useEffect(
+    () => {
+      if (newProps !== memoizedProps) {
+        const updatedPropsKeys = Object.keys();
+
+        console.log(
+          `Rerendered due to prop values update: ${Object.keys(newProps)
+            .toString()
+            .replace(",", ", ")}`
+        );
+
+        setMemoizedProps(newProps);
+      }
+    },
+
+    Object.values(newProps)
+  );
+};
+
+// 1) You need to figure out which properties are
 // causing this component to re-render and why.
-// 3) Could you implement a generic function
+// 2) Could you implement a generic function
 // that can do such detections?
-const Counter = ({ value, increase }) => {
+const Counter = (props) => {
+  const { value, increase } = props;
+
+  useRenderInspector(props);
+
   return (
     <div>
       <span>{value}</span> <button onClick={increase}>+1</button>
@@ -12,7 +38,7 @@ const Counter = ({ value, increase }) => {
   );
 };
 
-// 1) The following code is not optimal in terms
+// 3) The following code is not optimal in terms
 // of performance. Could you improve it?
 const Page = () => {
   const [value, setValue] = useState(0);
