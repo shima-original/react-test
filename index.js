@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+//Add a function (custom hook) to check which props change
+
 const useRenderInspector = (newProps) => {
   const [props, setProps] = useState(newProps);
 
@@ -47,7 +49,8 @@ const Page = () => {
       value={value}
       //  increase={() => setValue(value + 1)}
       increase={() => setValue((v) => v + 1)}
-      //Так Counter вернет точное значение, если вызывать его быстро и много раз подряд
+      //So Counter will return the exact value
+      //if you call it quickly and many times in a row
     />
   );
 };
