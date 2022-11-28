@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
 
 const useRenderInspector = (newProps) => {
-  const [memoizedProps, setMemoizedProps] = useState(newProps);
+  const [props, setProps] = useState(newProps);
 
   useEffect(
     () => {
-      if (newProps !== memoizedProps) {
-        const updatedPropsKeys = Object.keys();
+      if (newProps !== props) {
+        const updateSummary = Object.keys(newProps)
+          .filter((key) => newProps[key] !== props[key])
+          .toString()
+          .replace(",", ", ");
 
-        console.log(
-          `Rerendered due to prop values update: ${Object.keys(newProps)
-            .toString()
-            .replace(",", ", ")}`
-        );
+        console.log(`Rerendered due to prop values update: ${updateSummary}`);
 
-        setMemoizedProps(newProps);
+        setProps(newProps);
       }
     },
 
